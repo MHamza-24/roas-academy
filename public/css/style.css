@@ -1378,30 +1378,29 @@ h1 {
   body { background: #fff; color: #000; }
 }
 
-/* ═══════════════════════════════════════════════════════
-   FIX iOS Safari — Next.js touch events
-═══════════════════════════════════════════════════════ */
-#__next {
-  min-height: 100vh;
-  position: relative;
-  z-index: 0;
+/* ── FIX radio button visible + offer-pill selected ── */
+.offer-pill input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--green);
+  flex-shrink: 0;
+}
+.offer-pill.selected {
+  border-color: var(--green) !important;
+  background: rgba(16,185,129,.07) !important;
 }
 
-/* Neutralise next-route-announcer qui bloque les taps */
+/* ── FIX Next.js iOS touch ── */
 next-route-announcer {
   display: none !important;
   pointer-events: none !important;
-  position: fixed !important;
   width: 0 !important;
   height: 0 !important;
-  overflow: hidden !important;
 }
-
-/* Force les éléments cliquables sur iOS */
-a, button, [onclick], label,
-.faq-q, .pw-head, .rtab,
-.offer-pill, .wa-fab, .nav-burger,
-.topbar-close, .wa-popup-close {
+div[hidden] {
+  pointer-events: none !important;
+}
+a, button, label, .faq-q, .pw-head, .rtab, .offer-pill, .nav-burger, .wa-fab {
   cursor: pointer;
   touch-action: manipulation;
 }
