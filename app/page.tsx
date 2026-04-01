@@ -28,8 +28,11 @@ export default function Home() {
   }, []);
 
   return (
-    <div dangerouslySetInnerHTML={{ __html: landingHTML }} />
-  );
+  <div
+    style={{ position: 'relative', zIndex: 0, WebkitOverflowScrolling: 'touch' }}
+    dangerouslySetInnerHTML={{ __html: landingHTML }}
+  />
+);
 }
 
 const landingHTML = `

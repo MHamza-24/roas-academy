@@ -240,26 +240,26 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ── STICKY MOBILE CTA — version robuste iOS ── */
-  const stickyCta = document.getElementById('stickyCta');
-  if (stickyCta) {
-    // Cacher au départ via JS pour éviter le flash
-    stickyCta.style.display = 'none';
+const stickyCta = document.getElementById('stickyCta');
+if (stickyCta) {
+  stickyCta.style.cssText = 'display:none; position:fixed; bottom:12px; left:8px; right:8px; z-index:900;';
 
-    const showCta = () => {
-      const scrollY = window.scrollY || window.pageYOffset;
-      if (scrollY > 500) {
-        stickyCta.style.display = 'flex';
-        stickyCta.classList.add('show');
-      } else {
-        stickyCta.style.display = 'none';
-        stickyCta.classList.remove('show');
-      }
-    };
+  let lastScroll = 0;
+  const showCta = () => {
+    const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+    if (scrollY > 300 && scrollY !== lastScroll) {
+      stickyCta.style.display = 'flex';
+    } else if (scrollY < 100) {
+      stickyCta.style.display = 'none';
+    }
+    lastScroll = scrollY;
+  };
 
-    // iOS Safari supporte mieux ces deux événements combinés
-    window.addEventListener('scroll', showCta, { passive: true });
-    window.addEventListener('touchmove', showCta, { passive: true });
-  }
+  window.addEventListener('scroll', showCta, { passive: true });
+  window.addEventListener('touchmove', showCta, { passive: true });
+  window.addEventListener('touchend', showCta, { passive: true });
+  setTimeout(showCta, 1000);
+}
 
   /* ── SMOOTH SCROLL ── */
   document.querySelectorAll('a[href^="#"]').forEach(a => {
