@@ -1377,3 +1377,31 @@ h1 {
   .read-progress, .hero-wave { display: none !important; }
   body { background: #fff; color: #000; }
 }
+
+/* ═══════════════════════════════════════════════════════
+   FIX iOS Safari — Next.js touch events
+═══════════════════════════════════════════════════════ */
+#__next {
+  min-height: 100vh;
+  position: relative;
+  z-index: 0;
+}
+
+/* Neutralise next-route-announcer qui bloque les taps */
+next-route-announcer {
+  display: none !important;
+  pointer-events: none !important;
+  position: fixed !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Force les éléments cliquables sur iOS */
+a, button, [onclick], label,
+.faq-q, .pw-head, .rtab,
+.offer-pill, .wa-fab, .nav-burger,
+.topbar-close, .wa-popup-close {
+  cursor: pointer;
+  touch-action: manipulation;
+}
