@@ -5,7 +5,7 @@ const SESSION_TOKEN = 'roas-admin-2026-secured'
 export async function POST(request: NextRequest) {
   const { password } = await request.json()
 
-  if (password !== process.env.ADMIN_PASSWORD) {
+  if (password !== 'TIMA2805tima@') {
     return NextResponse.json({ error: 'Mot de passe incorrect' }, { status: 401 })
   }
 
