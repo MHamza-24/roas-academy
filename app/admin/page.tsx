@@ -54,7 +54,14 @@ export default function AdminDashboard() {
     setLoading(false);
   };
 
-  useEffect(() => { fetchLeads(); }, []);
+  useEffect(() => {
+  const auth = localStorage.getItem('admin_auth');
+  if (auth !== 'roas-admin-2026-secured') {
+    router.push('/admin/login');
+    return;
+  }
+  fetchLeads();
+}, []);
 
   // Mettre à jour le statut
   const updateStatut = async (id: string, statut: Statut) => {
@@ -97,10 +104,9 @@ export default function AdminDashboard() {
 
   // Déconnexion
   const logout = async () => {
-    await fetch('/api/admin/login', { method: 'DELETE' });
-    document.cookie = 'admin_session=; Max-Age=0; path=/';
-    router.push('/admin/login');
-  };
+  localStorage.removeItem('admin_auth');
+  router.push('/admin/login');
+};
 
   // Filtres
   const filteredLeads = leads.filter(l => {
