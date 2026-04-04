@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "ROAS Academy — Apprends à faire des Meta Ads qui rapportent au Maroc",
@@ -20,21 +21,32 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
         <link rel="stylesheet" href="/css/style.css" />
-
-        {/* Umami Analytics */}
-        <script defer src="https://cloud.umami.is/script.js" data-website-id="fd5513da-fbf0-4786-aa84-394df00a020f" />
-
-        {/* Google Analytics 4 */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-RN74JQEZYB" />
-        <script dangerouslySetInnerHTML={{ __html: `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-RN74JQEZYB');
-        `}} />
       </head>
       <body style={{ WebkitOverflowScrolling: 'touch', overflowX: 'hidden' }}>
         {children}
+
+        {/* Umami Analytics */}
+        <Script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="fd5513da-fbf0-4786-aa84-394df00a020f"
+          strategy="afterInteractive"
+        />
+
+        {/* Google Analytics 4 */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-RN74JQEZYB"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-RN74JQEZYB');
+          `}
+        </Script>
+
       </body>
     </html>
   );
