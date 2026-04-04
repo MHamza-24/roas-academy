@@ -1,19 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 const SESSION_TOKEN = 'roas-admin-2026-secured'
+const ADMIN_PASSWORD = 'TIMA2805tima@'
 
 export async function POST(request: NextRequest) {
   const { password } = await request.json()
 
-  if (password !== 'TIMA2805tima@') {
+  if (password !== ADMIN_PASSWORD) {
     return NextResponse.json({ error: 'Mot de passe incorrect' }, { status: 401 })
   }
 
   const response = NextResponse.json({ success: true })
-  response.cookies.set('admin_session', SESSION_TOKEN, {
+  response.cookies.set({
+    name: 'admin_session',
+    value: SESSION_TOKEN,
     httpOnly: true,
     secure: true,
-    sameSite: 'strict',
+    sameSite: 'lax',
     maxAge: 60 * 60 * 24,
     path: '/',
   })
