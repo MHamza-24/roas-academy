@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 const SESSION_TOKEN = 'roas-admin-2026-secured'
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const session = request.cookies.get('admin_session')
   const { pathname } = request.nextUrl
 
