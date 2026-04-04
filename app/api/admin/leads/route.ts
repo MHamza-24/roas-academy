@@ -6,55 +6,41 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
 
-// Vérifier la session admin
+const ADMIN_TOKEN = 'roas-admin-2026-secured'
+
 function isAuthenticated(request: NextRequest): boolean {
-  const session = request.cookies.get('admin_session')
-  return session?.value === process.env.ADMIN_PASSWORD
+  const token = request.headers.get('x-admin-token')
+  return token === ADMIN_TOKEN
 }
 
-// GET — récupérer tous les leads
 export async function GET(request: NextRequest) {
   if (!isAuthenticated(request)) {
     return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
   }
-
   const { data, error } = await supabase
     .from('leads')
     .select('*')
     .order('created_at', { ascending: false })
-
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json({ leads: data })
 }
 
-// PATCH — mettre à jour le statut d'un lead
 export async function PATCH(request: NextRequest) {
   if (!isAuthenticated(request)) {
     return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
   }
-
   const { id, statut } = await request.json()
-  const { error } = await supabase
-    .from('leads')
-    .update({ statut })
-    .eq('id', id)
-
+  const { error } = await supabase.from('leads').update({ statut }).eq('id', id)
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json({ success: true })
 }
 
-// DELETE — supprimer un lead
 export async function DELETE(request: NextRequest) {
   if (!isAuthenticated(request)) {
     return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
   }
-
   const { id } = await request.json()
-  const { error } = await supabase
-    .from('leads')
-    .delete()
-    .eq('id', id)
-
+  const { error } = await supabase.from('leads').delete().eq('id', id)
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json({ success: true })
 }
