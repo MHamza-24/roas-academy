@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+const SESSION_TOKEN = 'roas-admin-2026-secured'
+
 export async function POST(request: NextRequest) {
   const { password } = await request.json()
 
@@ -8,9 +10,9 @@ export async function POST(request: NextRequest) {
   }
 
   const response = NextResponse.json({ success: true })
-  response.cookies.set('admin_session', process.env.ADMIN_PASSWORD!, {
+  response.cookies.set('admin_session', SESSION_TOKEN, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: true,
     sameSite: 'strict',
     maxAge: 60 * 60 * 24,
     path: '/',

@@ -1,17 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+// Token fixe pour la session — indépendant de l'env
+const SESSION_TOKEN = 'roas-admin-2026-secured'
+
 export function middleware(request: NextRequest) {
   const session = request.cookies.get('admin_session')
-  const isAdminPage = request.nextUrl.pathname.startsWith('/admin')
   const isLoginPage = request.nextUrl.pathname === '/admin/login'
-  const isApiLogin = request.nextUrl.pathname === '/api/admin/login'
+  const isApiLogin = request.nextUrl.pathname.startsWith('/api/admin/login')
 
-  // Laisser passer la page login et l'API login
   if (isLoginPage || isApiLogin) return NextResponse.next()
 
-  // Protéger toutes les pages /admin
-  if (isAdminPage) {
-    if (!session || session.value !== process.env.ADMIN_PASSWORD) {
+  if (request.nextUrl.pathname.startsWith('/admin')) {
+    if (session?.value !== SESSION_TOKEN) {
       return NextResponse.redirect(new URL('/admin/login', request.url))
     }
   }
