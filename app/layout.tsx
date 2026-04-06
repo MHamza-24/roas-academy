@@ -25,13 +25,13 @@ export default function RootLayout({
       <body style={{ WebkitOverflowScrolling: 'touch', overflowX: 'hidden' }}>
         {children}
 
-        {/* Umami Analytics */}
-        <Script
-          defer
-          src="https://cloud.umami.is/script.js"
-          data-website-id="fd5513da-fbf0-4786-aa84-394df00a020f"
-          strategy="afterInteractive"
-        />
+        {/* Umami Analytics — Self-hosted Railway */}
+<Script
+  defer
+  src="https://umami-production-3fd5.up.railway.app/script.js"
+  data-website-id="87dc5683-69ef-4ed3-bc2d-f7ab72b1e673"
+  strategy="afterInteractive"
+/>
 
         {/* Google Analytics 4 */}
         <Script
