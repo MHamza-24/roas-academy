@@ -29,7 +29,7 @@ export default function RootLayout({
 <Script
   defer
   src="https://umami-production-3fd5.up.railway.app/script.js"
-  data-website-id="87dc5683-69ef-4ed3-bc2d-f7ab72b1e673"
+  data-website-id="56a2490b-b94e-423e-be51-b9e92ef6f627"
   strategy="afterInteractive"
 />
 
