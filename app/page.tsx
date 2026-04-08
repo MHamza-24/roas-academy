@@ -76,7 +76,7 @@ function Hero() {
             <div className="hstat"><span className="hstat-n">40</span><span className="hstat-l">Places · Cohorte 1</span></div>
           </div>
           <div className="hero-actions">
-            <a href="#inscription" className="btn-primary btn-lg">Rejoindre la Cohorte 1 <i className="fas fa-arrow-right" /></a>
+            <a href="#inscription" className="btn-primary btn-lg">Rejoindre la prochaine Cohorte<i className="fas fa-arrow-right" /></a>
             <a href="#programme" className="btn-ghost-hero"><i className="fas fa-play-circle" /> <span>Voir le programme</span></a>
           </div>
           <div className="hero-trust">
