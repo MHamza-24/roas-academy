@@ -67,7 +67,7 @@ function Hero() {
         <div className="hero-left">
           <div className="hero-tag">🌐 Méthode internationale · Lancée au Maroc pour la 1ère fois 🇲🇦</div>
           <h1>Maximisez vos résultats Meta Ads<br /><span className="h1-accent">Apprenez la méthode rentable.</span></h1>
-          <p className="hero-desc">Une formation live de <strong>5 semaines</strong> pour maîtriser Meta Ads de A à Z — stratégie, setup technique, créatifs, ciblage, et scale. Avec des <strong>cas réels marocains</strong> et une méthode testée sur des marchés internationaux.</p>
+          <p className="hero-desc">Une formation live de <strong>5 semaines</strong> pour maîtriser Meta Ads de A à Z — stratégie, setup technique, créatifs, ciblage, et scale. Avec des <strong>cas réels marocains et internationaux</strong> et une méthode testée sur des marchés internationaux.</p>
           <div className="hero-stats">
             <div className="hstat"><span className="hstat-n">8.1<span className="hstat-x">x</span></span><span className="hstat-l">ROAS max obtenu</span></div>
             <div className="hstat-sep" />
@@ -215,13 +215,13 @@ function Solution() {
       <div className="container">
         <div className="solution-inner">
           <div className="solution-img-col">
-            <img src="/images/live-class.png" alt="Session live Meta Ads Bootcamp" />
+            <img src="/images/live-class.png" alt="Session live Meta Ads Formation" />
             <div className="sol-badge"><i className="fas fa-globe" /> Campagnes rentables · Créatifs qui convertissent · Scale sans perdre de ROAS</div>
           </div>
           <div className="solution-text-col">
             <div className="section-label">La solution</div>
             <h2 className="section-h2">Bienvenue dans <span className="accent">ROAS Academy</span></h2>
-            <p className="solution-desc">Le premier bootcamp Meta Ads au Maroc qui combine <strong>méthode internationale prouvée</strong> et <strong>cas réels du marché local</strong>. 5 semaines pour passer de zéro à des campagnes qui financent elles-mêmes leur propre croissance.</p>
+            <p className="solution-desc">La première formation Meta Ads au Maroc qui combine <strong>méthode internationale prouvée</strong> et <strong>cas réels du marché local</strong>. 5 semaines pour passer de zéro à des campagnes qui financent elles-mêmes leur propre croissance.</p>
             <div className="sol-features">
               {['5 sessions live hebdomadaires de 2h30 chacune', 'Exercices pratiques sur ton propre compte Meta', 'Benchmarks & cas réels 🇲🇦 Maroc + 🌍 International', 'Communauté WhatsApp + replays 3 mois', 'Audit de ton compte offert avant le démarrage'].map((f, i) => (
                 <div key={i} className="sol-feat"><i className="fas fa-check-circle" /> {f}</div>
@@ -229,7 +229,7 @@ function Solution() {
             </div>
             <div className="sol-quote">
               <i className="fas fa-quote-left" />
-              <p>"Après 3 semaines de bootcamp, j'ai lancé ma première campagne à 4.8x ROAS — par moi-même. Sans agence, sans budget énorme."</p>
+              <p>"Après 3 semaines de formation, j'ai lancé ma première campagne à 4.8x ROAS — par moi-même. Sans agence, sans budget énorme."</p>
               <span>Mehdi B. · E-commerce mode · Casablanca</span>
             </div>
           </div>
@@ -251,7 +251,7 @@ function PourQui() {
     <section className="forwhom-sec" id="pour-qui">
       <div className="container">
         <div className="section-label">Pour qui ?</div>
-        <h2 className="section-h2">Ce bootcamp est fait pour <span className="accent">4 profils précis</span></h2>
+        <h2 className="section-h2">Cette formation est faite pour <span className="accent">4 profils précis</span></h2>
         <p className="section-p">Si tu te reconnais dans l'un d'eux, tu es exactement là où tu dois être.</p>
         <div className="forwhom-grid">
           {profiles.map((p, i) => (
@@ -398,7 +398,7 @@ function Resultats() {
             <div className="rcard rcard-join">
               <div className="rcard-join-inner">
                 <i className="fas fa-rocket" /><h4>Ton résultat sera ici.</h4>
-                <p>Cohorte 1 · Démarre le 03 Mai</p>
+                <p>Rejoins la prochaine cohorte</p>
                 <a href="#inscription" className="btn-primary">Rejoindre →</a>
               </div>
             </div>
@@ -448,8 +448,8 @@ function Resultats() {
 /* ── TÉMOIGNAGES ── */
 function Temoignages() {
   const testis = [
-    { initiale: 'M', bg: 'linear-gradient(135deg,#059669,#34d399)', name: 'Mehdi B.', role: 'E-commerce mode · Casablanca', quote: "J'avais dépensé 15 000 DHS avec une agence sans résultats. Après 3 semaines de bootcamp, j'ai lancé ma propre campagne à 4.8x ROAS.", result: 'ROAS 4.8x atteint', featured: true },
-    { initiale: 'S', bg: 'linear-gradient(135deg,#7c3aed,#a78bfa)', name: 'Sara A.', role: 'Freelance Media Buyer · Rabat', quote: "Le setup technique de la semaine 2 a tout changé. Mon Pixel était mal configuré depuis 6 mois. Le CAPI workshop vaut à lui seul le prix du bootcamp." },
+    { initiale: 'M', bg: 'linear-gradient(135deg,#059669,#34d399)', name: 'Mehdi B.', role: 'E-commerce mode · Casablanca', quote: "J'avais dépensé 15 000 DHS avec une agence sans résultats. Après 3 semaines de formation, j'ai lancé ma propre campagne à 4.8x ROAS.", result: 'ROAS 4.8x atteint', featured: true },
+    { initiale: 'S', bg: 'linear-gradient(135deg,#7c3aed,#a78bfa)', name: 'Sara A.', role: 'Freelance Media Buyer · Rabat', quote: "Le setup technique de la semaine 2 a tout changé. Mon Pixel était mal configuré depuis 6 mois. Le CAPI workshop vaut à lui seul le prix de la formation." },
     { initiale: 'K', bg: 'linear-gradient(135deg,#d97706,#fbbf24)', name: 'Karim E.', role: 'Consultant B2B · Casablanca', quote: "Je pensais que ma niche B2B ne marchait pas sur Meta. La méthode des 3 couches m'a prouvé le contraire. 12 leads qualifiés en une semaine pour 500 MAD." },
     { initiale: 'N', bg: 'linear-gradient(135deg,#dc2626,#f87171)', name: 'Nadia M.', role: 'Clinique esthétique · Marrakech', quote: "La partie créatifs de la semaine 4 était une révélation. Depuis que j'ai switché aux selfie vidéos, mon CTR a triplé." },
     { initiale: 'Y', bg: 'linear-gradient(135deg,#0891b2,#38bdf8)', name: 'Youssef T.', role: 'Fondateur startup · Casablanca', quote: "Ce qui m'a convaincu c'est la transparence sur les benchmarks marocains. On sait exactement où on est par rapport au marché." },
@@ -503,7 +503,7 @@ function Pricing() {
       <div className="container">
         <div className="section-label">Tarifs</div>
         <h2 className="section-h2">Un investissement qui se <span className="accent">rembourse lui-même.</span></h2>
-        <p className="section-p">Ton budget de test Meta Ads : 1 000 DHS. Si ROAS = 3x, tu génères 3 000 DHS. Le bootcamp est remboursé en une campagne.</p>
+        <p className="section-p">Ton budget de test Meta Ads : 1 000 DHS. Si ROAS = 3x, tu génères 3 000 DHS. La formation est remboursée en une campagne.</p>
         <div className="urgency-strip">
           <i className="fas fa-clock" />
           <span>{countdown}</span>
@@ -687,11 +687,10 @@ function FAQ() {
   const faqs = [
     { q: "Est-ce que j'ai besoin d'un site web pour participer ?", a: "Non. Tu peux lancer des campagnes directement vers un formulaire natif Meta (lead ads), une page WhatsApp Business, ou un profil Instagram." },
     { q: "Quel budget Meta Ads faut-il prévoir en plus ?", a: "Selon les benchmarks marocains 2026, tu peux démarrer avec 30 à 50 MAD/jour. Pour les exercices, on recommande 500–1 000 MAD sur les 5 semaines." },
-    { q: "Je n'ai jamais lancé de campagne. C'est pour moi ?", a: "Oui. Le bootcamp commence par les fondations (semaines 1 et 2) et monte progressivement. Zéro pré-requis technique requis." },
+    { q: "Je n'ai jamais lancé de campagne. C'est pour moi ?", a: "Oui. La formation commence par les fondations (semaines 1 et 2) et monte progressivement. Zéro pré-requis technique requis." },
     { q: "Y a-t-il une certification à la fin ?", a: "Tu reçois une attestation de participation ROAS Academy. Notre priorité est que tu aies des résultats concrets sur tes campagnes." },
     { q: "Que se passe-t-il si je rate une session live ?", a: "Chaque session est enregistrée et disponible en replay dans les 24h suivantes. Tu as accès à tous les replays pendant 3 mois (6 mois pour les VIP)." },
-    { q: "Dans quelle langue se déroule la formation ?", a: "Principalement en français avec des touches de darija pour les exemples marocains." },
-    { q: "Pourquoi une startup étrangère plutôt qu'un formateur local ?", a: "Notre atout : avoir géré des campagnes sur des marchés plus avancés (Europe, USA) et adapter cette expertise au Maroc avec des benchmarks internationaux." },
+    { q: "Dans quelle langue se déroule la formation ?", a: "Principalement en français, darija et anglais pour les termes techniques mais le formateur s'adapte à la langue préférée du groupe." },
     { q: "La méthode fonctionne pour une petite activité locale ?", a: "Oui — et c'est même là que Meta Ads est le plus rentable au Maroc. Restaurant, salon, clinique, artisan... Les benchmarks incluent des cas comme 8–12 leads qualifiés/jour pour 500 MAD." },
   ];
   return (
@@ -738,7 +737,7 @@ function FinalCTA() {
         <div className="final-inner">
           <div className="final-left">
             <h2>Les Meta Ads qui rapportent,<br /><span className="accent">ça commence ici.</span></h2>
-            <p>Cohorte 1 · Démarre le <strong>03 Mai</strong> · <strong>40 places</strong> restantes</p>
+            <p>Rejoins la prochaine cohorte</p>
             <div className="final-btns">
               <a href="#inscription" className="btn-primary btn-lg">Réserver ma place — 890 DHS →</a>
               <a href="https://wa.me/212663353111" className="btn-whatsapp" target="_blank" rel="noopener"><i className="fab fa-whatsapp" /> WhatsApp</a>
@@ -802,7 +801,7 @@ function WhatsAppWidget() {
   const [msg, setMsg] = useState('');
   const [notif, setNotif] = useState(true);
   const sendMsg = () => {
-    const text = msg.trim() || "Salam ! J'ai une question sur le bootcamp ROAS Academy 👋";
+    const text = msg.trim() || "Salam ! J'ai une question sur la formation ROAS Academy 👋";
     window.open(`https://wa.me/212663353111?text=${encodeURIComponent(text)}`, '_blank');
   };
   return (
@@ -819,7 +818,7 @@ function WhatsAppWidget() {
           </div>
           <div className="wa-popup-body">
             <div className="wa-message">
-              <p>👋 Salam ! Tu as une question sur le bootcamp Meta Ads ?</p>
+              <p>👋 Salam ! Tu as une question sur la formation Meta Ads ?</p>
               <p>On te répond en quelques minutes sur WhatsApp 🚀</p>
             </div>
           </div>

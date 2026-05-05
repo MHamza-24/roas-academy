@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 
 export const metadata: Metadata = {
-  title: "ROAS Academy — Apprends à faire des Meta Ads qui rapportent au Maroc",
+  title: "ROAS Academy — Apprends à faire des Meta Ads qui rapportent",
   description: "Formation Meta Ads 5 semaines au Maroc. Méthode internationale. Lance ta première campagne rentable dès la semaine 3.",
 };
 
