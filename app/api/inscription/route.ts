@@ -1,46 +1,75 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
+import { supabaseAdmin } from '@/lib/supabase'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
-
-const MAKE_WEBHOOK = 'https://hook.eu1.make.com/xz8asilm4l145hgbpg9pyrcjxpirqoq2'
+const MAKE_WEBHOOK = process.env.MAKE_WEBHOOK_URL!
+const ALLOWED_OFFRES = ['early-bird', 'vip'] as const
 
 export async function POST(request: NextRequest) {
-  const body = await request.json()
-  const { prenom, nom, email, whatsapp, activite, offre, message } = body
+  let body: unknown
+  try { body = await request.json() } catch {
+    return NextResponse.json({ error: 'Corps de requête invalide' }, { status: 400 })
+  }
+
+  const { prenom, nom, email, whatsapp, activite, offre, message } = body as Record<string, unknown>
+
+  if (typeof prenom !== 'string' || prenom.trim().length < 1 || prenom.length > 100)
+    return NextResponse.json({ error: 'Prénom invalide' }, { status: 400 })
+  if (typeof nom !== 'string' || nom.trim().length < 1 || nom.length > 100)
+    return NextResponse.json({ error: 'Nom invalide' }, { status: 400 })
+  if (typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254)
+    return NextResponse.json({ error: 'Email invalide' }, { status: 400 })
+  if (typeof whatsapp !== 'string' || !/^\+?[\d\s\-()]{8,20}$/.test(whatsapp))
+    return NextResponse.json({ error: 'Numéro WhatsApp invalide' }, { status: 400 })
+  if (!ALLOWED_OFFRES.includes(offre as typeof ALLOWED_OFFRES[number]))
+    return NextResponse.json({ error: 'Offre invalide' }, { status: 400 })
+  if (activite !== undefined && (typeof activite !== 'string' || activite.length > 200))
+    return NextResponse.json({ error: 'Activité invalide' }, { status: 400 })
+  if (message !== undefined && (typeof message !== 'string' || message.length > 2000))
+    return NextResponse.json({ error: 'Message trop long' }, { status: 400 })
+
+  const safeActivite = typeof activite === 'string' ? activite.trim() : null
+  const safeMessage = typeof message === 'string' ? message.trim() : null
 
   // 1. Insérer dans Supabase
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from('leads')
-    .insert([{ prenom, nom, email, whatsapp, activite, offre, message, statut: 'nouveau' }])
+    .insert([{
+      prenom: prenom.trim(),
+      nom: nom.trim(),
+      email: email.toLowerCase().trim(),
+      whatsapp: whatsapp.trim(),
+      activite: safeActivite,
+      offre,
+      message: safeMessage,
+      statut: 'nouveau',
+    }])
     .select()
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json({ error: 'Erreur lors de l\'inscription' }, { status: 500 })
   }
 
   // 2. Envoyer vers Make → Airtable
-  try {
-    await fetch(MAKE_WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        prenom,
-        nom,
-        email,
-        whatsapp,
-        activite: activite || 'Non précisé',
-        offre: offre === 'vip' ? 'VIP' : 'Early Bird',
-        message: message || '',
-        statut: 'Nouveau',
-        date_inscription: new Date().toISOString(),
-      }),
-    })
-  } catch (err) {
-    console.warn('Make webhook error:', err)
+  if (MAKE_WEBHOOK) {
+    try {
+      await fetch(MAKE_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prenom: prenom.trim(),
+          nom: nom.trim(),
+          email: email.toLowerCase().trim(),
+          whatsapp: whatsapp.trim(),
+          activite: safeActivite ?? 'Non précisé',
+          offre: offre === 'vip' ? 'VIP' : 'Early Bird',
+          message: safeMessage ?? '',
+          statut: 'Nouveau',
+          date_inscription: new Date().toISOString(),
+        }),
+      })
+    } catch (err) {
+      console.warn('Make webhook error:', err)
+    }
   }
 
   return NextResponse.json({ success: true, data })
