@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 
 const MAKE_WEBHOOK = process.env.MAKE_WEBHOOK_URL!
-const ALLOWED_OFFRES = ['early-bird', 'vip'] as const
+const ALLOWED_OFFRES = ['early', 'vip'] as const
 
 export async function POST(request: NextRequest) {
   let body: unknown
