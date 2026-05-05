@@ -584,7 +584,7 @@ function Inscription() {
       if (res.ok && data.success) {
         setSuccess(true);
       } else {
-        alert('Une erreur est survenue. Réessaie ou contacte-nous sur WhatsApp.');
+        alert(`Erreur (${res.status}): ${data.error ?? 'Inconnue'}`);
       }
     } catch {
       alert('Erreur de connexion. Vérifie ta connexion internet.');
