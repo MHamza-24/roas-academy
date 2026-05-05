@@ -25,8 +25,6 @@ const STATUTS: { value: Statut; label: string; color: string; bg: string }[] = [
   { value: 'annulé',   label: '❌ Annulé',   color: '#f87171', bg: 'rgba(248,113,113,0.12)' },
 ];
 
-const ADMIN_TOKEN = 'roas-admin-2026-secured';
-
 export default function AdminDashboard() {
   const router = useRouter();
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -36,9 +34,7 @@ export default function AdminDashboard() {
   const [updating, setUpdating] = useState<string | null>(null);
 
   const fetchLeads = async () => {
-    const res = await fetch('/api/admin/leads', {
-      headers: { 'x-admin-token': ADMIN_TOKEN },
-    });
+    const res = await fetch('/api/admin/leads');
     if (res.status === 401) { router.push('/admin/login'); return; }
     const data = await res.json();
     setLeads(data.leads ?? []);
@@ -46,11 +42,6 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
-    const auth = localStorage.getItem('admin_auth');
-    if (auth !== ADMIN_TOKEN) {
-      router.push('/admin/login');
-      return;
-    }
     fetchLeads();
   }, []);
 
@@ -58,10 +49,7 @@ export default function AdminDashboard() {
     setUpdating(id);
     await fetch('/api/admin/leads', {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-admin-token': ADMIN_TOKEN,
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id, statut }),
     });
     setLeads(leads.map(l => l.id === id ? { ...l, statut } : l));
@@ -72,33 +60,37 @@ export default function AdminDashboard() {
     if (!confirm('Supprimer ce lead définitivement ?')) return;
     await fetch('/api/admin/leads', {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-admin-token': ADMIN_TOKEN,
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id }),
     });
     setLeads(leads.filter(l => l.id !== id));
+  };
+
+  const escapeCSV = (val: unknown) => {
+    const s = String(val ?? '').replace(/"/g, '""');
+    const safe = /^[=+\-@]/.test(s) ? `'${s}` : s;
+    return `"${safe}"`;
   };
 
   const exportCSV = () => {
     const headers = ['Prénom', 'Nom', 'Email', 'WhatsApp', 'Offre', 'Activité', 'Statut', 'Message', 'Date'];
     const rows = filteredLeads.map(l => [
       l.prenom, l.nom, l.email, l.whatsapp, l.offre,
-      l.activite, l.statut, l.message?.replace(/,/g, ' ') ?? '',
+      l.activite, l.statut, l.message ?? '',
       new Date(l.created_at).toLocaleDateString('fr-FR'),
     ]);
-    const csv = [headers, ...rows].map(r => r.join(',')).join('\n');
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const csv = [headers, ...rows].map(r => r.map(escapeCSV).join(',')).join('\n');
+    const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
     a.download = `leads-roas-${new Date().toISOString().split('T')[0]}.csv`;
     a.click();
+    URL.revokeObjectURL(url);
   };
 
-  const logout = () => {
-    localStorage.removeItem('admin_auth');
+  const logout = async () => {
+    await fetch('/api/admin/login', { method: 'DELETE' });
     window.location.href = '/admin/login';
   };
 
@@ -196,7 +188,7 @@ export default function AdminDashboard() {
                         <a href={`mailto:${lead.email}`} style={{ color: '#60a5fa', textDecoration: 'none', fontSize: '0.84rem' }}>{lead.email}</a>
                       </td>
                       <td style={st.td}>
-                        <a href={`https://wa.me/${lead.whatsapp.replace(/[\s+\-]/g, '')}`} target="_blank" rel="noopener"
+                        <a href={`https://wa.me/${lead.whatsapp.replace(/[^\d]/g, '')}`} target="_blank" rel="noopener noreferrer"
                           style={{ color: '#25d366', textDecoration: 'none', fontSize: '0.84rem', display: 'flex', alignItems: 'center', gap: '5px' }}>
                           📱 {lead.whatsapp}
                         </a>
@@ -229,8 +221,8 @@ export default function AdminDashboard() {
                       </td>
                       <td style={st.td}>
                         <div style={{ display: 'flex', gap: '6px' }}>
-                          <a href={`https://wa.me/${lead.whatsapp.replace(/[\s+\-]/g, '')}?text=Salam ${lead.prenom} ! Je vous contacte de la part de ROAS Academy concernant votre inscription.`}
-                            target="_blank" rel="noopener"
+                          <a href={`https://wa.me/${lead.whatsapp.replace(/[^\d]/g, '')}?text=Salam ${lead.prenom} ! Je vous contacte de la part de ROAS Academy concernant votre inscription.`}
+                            target="_blank" rel="noopener noreferrer"
                             style={{ ...st.btn, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px', color: '#25d366', borderColor: 'rgba(37,211,102,0.3)' }}>
                             💬 WA
                           </a>

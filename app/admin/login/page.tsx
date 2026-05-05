@@ -10,15 +10,27 @@ export default function AdminLogin() {
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setLoading(true);
-  setError('');
-
-  if (password === 'TIMA2805tima@') {
-  localStorage.setItem('admin_auth', 'roas-admin-2026-secured');
-  window.location.href = '/admin';
-}
-};
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        setError(data.error ?? 'Mot de passe incorrect');
+        return;
+      }
+      router.push('/admin');
+    } catch {
+      setError('Erreur réseau, réessayez.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div style={{

@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const SESSION_TOKEN = 'roas-admin-2026-secured'
-const ADMIN_PASSWORD = 'TIMA2805tima@'
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD!
+const SESSION_TOKEN = process.env.ADMIN_SESSION_TOKEN!
 
 export async function POST(request: NextRequest) {
-  const { password } = await request.json()
+  let body: unknown
+  try { body = await request.json() } catch {
+    return NextResponse.json({ error: 'Corps de requête invalide' }, { status: 400 })
+  }
 
-  if (password !== ADMIN_PASSWORD) {
+  const { password } = body as Record<string, unknown>
+  if (typeof password !== 'string' || password !== ADMIN_PASSWORD) {
     return NextResponse.json({ error: 'Mot de passe incorrect' }, { status: 401 })
   }
 
@@ -15,7 +19,7 @@ export async function POST(request: NextRequest) {
     name: 'admin_session',
     value: SESSION_TOKEN,
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
     maxAge: 60 * 60 * 24,
     path: '/',
