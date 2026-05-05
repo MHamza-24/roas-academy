@@ -13,17 +13,17 @@ export async function POST(request: NextRequest) {
   const { prenom, nom, email, whatsapp, activite, offre, message } = body as Record<string, unknown>
 
   if (typeof prenom !== 'string' || prenom.trim().length < 1 || prenom.length > 100)
-    return NextResponse.json({ error: 'Prénom invalide' }, { status: 400 })
+    return NextResponse.json({ error: `Prénom invalide (reçu: ${JSON.stringify(prenom)})` }, { status: 400 })
   if (typeof nom !== 'string' || nom.trim().length < 1 || nom.length > 100)
-    return NextResponse.json({ error: 'Nom invalide' }, { status: 400 })
+    return NextResponse.json({ error: `Nom invalide (reçu: ${JSON.stringify(nom)})` }, { status: 400 })
   if (typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254)
-    return NextResponse.json({ error: 'Email invalide' }, { status: 400 })
+    return NextResponse.json({ error: `Email invalide (reçu: ${JSON.stringify(email)})` }, { status: 400 })
   if (typeof whatsapp !== 'string' || !/^\+?[\d\s\-()]{8,20}$/.test(whatsapp))
-    return NextResponse.json({ error: 'Numéro WhatsApp invalide' }, { status: 400 })
+    return NextResponse.json({ error: `WhatsApp invalide (reçu: ${JSON.stringify(whatsapp)})` }, { status: 400 })
   if (!ALLOWED_OFFRES.includes(offre as typeof ALLOWED_OFFRES[number]))
-    return NextResponse.json({ error: 'Offre invalide' }, { status: 400 })
+    return NextResponse.json({ error: `Offre invalide (reçu: ${JSON.stringify(offre)})` }, { status: 400 })
   if (activite !== undefined && (typeof activite !== 'string' || activite.length > 200))
-    return NextResponse.json({ error: 'Activité invalide' }, { status: 400 })
+    return NextResponse.json({ error: `Activité invalide (reçu: ${JSON.stringify(activite)})` }, { status: 400 })
   if (message !== undefined && (typeof message !== 'string' || message.length > 2000))
     return NextResponse.json({ error: 'Message trop long' }, { status: 400 })
 
