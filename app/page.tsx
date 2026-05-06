@@ -480,23 +480,9 @@ function Temoignages() {
 /* ── PRICING ── */
 function Pricing() {
   const [spots, setSpots] = useState(35);
-  const [countdown, setCountdown] = useState('⏱️ Calcul en cours...');
   useEffect(() => {
-    const target = new Date();
-    target.setDate(target.getDate() + 7);
-    target.setHours(23, 59, 59, 0);
-    const interval = setInterval(() => {
-      const diff = target.getTime() - Date.now();
-      if (diff <= 0) { setCountdown('Early Bird expiré'); clearInterval(interval); return; }
-      const d = Math.floor(diff / 86400000);
-      const h = Math.floor((diff % 86400000) / 3600000);
-      const m = Math.floor((diff % 3600000) / 60000);
-      const s = Math.floor((diff % 60000) / 1000);
-      const p = (n: number) => String(n).padStart(2, '0');
-      setCountdown(`⏱️ Expire dans : ${d}j ${p(h)}h ${p(m)}m ${p(s)}s`);
-    }, 1000);
     const spotsI = setInterval(() => { if (Math.random() < 0.25) setSpots(s => s > 25 ? s - 1 : s); }, 50000);
-    return () => { clearInterval(interval); clearInterval(spotsI); };
+    return () => { clearInterval(spotsI); };
   }, []);
   return (
     <section className="pricing-sec" id="pricing">
@@ -504,11 +490,6 @@ function Pricing() {
         <div className="section-label">Tarifs</div>
         <h2 className="section-h2">Un investissement qui se <span className="accent">rembourse lui-même.</span></h2>
         <p className="section-p">Ton budget de test Meta Ads : 1 000 DHS. Si ROAS = 3x, tu génères 3 000 DHS. La formation est remboursée en une campagne.</p>
-        <div className="urgency-strip">
-          <i className="fas fa-clock" />
-          <span>{countdown}</span>
-          <span className="urg-spots">⚡ <strong>{spots}</strong> places sur 40 restantes</span>
-        </div>
         <div className="pricing-grid">
           <div className="price-card price-popular">
             <div className="pc-badge">🔥 Early Bird — Recommandé</div>
@@ -529,8 +510,8 @@ function Pricing() {
             <div className="pc-badge vip">👑 VIP — 10 places max</div>
             <div className="pc-head">
               <h3>Cohorte 1 · VIP</h3>
-              <div className="pc-price"><span className="pc-now gold">1 990 DHS</span></div>
-              <p className="pc-terms">ou 2 × 995 DHS · Paiement en 2 fois</p>
+              <div className="pc-price"><span className="pc-now gold">4 990 DHS</span></div>
+              <p className="pc-terms">ou 2 × 2 495 DHS · Paiement en 2 fois</p>
             </div>
             <div className="pc-features">
               <div className="pc-feat"><i className="fas fa-check" /> Tout ce qui est dans Early Bird</div>
@@ -656,7 +637,7 @@ function Inscription() {
                     </label>
                     <label className={`offer-pill${offre === 'vip' ? ' selected' : ''}`}>
                       <input type="radio" name="offer" value="vip" checked={offre === 'vip'} onChange={() => setOffre('vip')} />
-                      <span>👑 VIP — 1 990 DHS</span>
+                      <span>👑 VIP — 4 990 DHS</span>
                     </label>
                   </div>
                 </div>
