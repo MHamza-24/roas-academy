@@ -494,12 +494,12 @@ function Pricing() {
           <div className="price-card price-popular">
             <div className="pc-badge">🔥 Early Bird — Recommandé</div>
             <div className="pc-head">
-              <h3>Cohorte 1</h3>
+              <h3>Pack Essentiel</h3>
               <div className="pc-price"><span className="pc-old">1 190 DHS</span><span className="pc-now">890 DHS</span></div>
               <p className="pc-terms">ou 2 × 450 DHS · Paiement en 2 fois</p>
             </div>
             <div className="pc-features">
-              {['5 sessions live (2h30 chacune · samedi ou dimanche)', 'Exercices sur ton propre compte Meta', 'Template Google Sheets de suivi', 'Audit Meta offert avant démarrage', 'Communauté WhatsApp / Discord', 'Replays pendant 3 mois', "Benchmarks + cas d'études complets"].map((f, i) => (
+              {['5 sessions live (2h30 chacune · samedi ou dimanche)', 'Exercices sur ton propre compte Meta', 'Template Google Sheets de suivi', 'Audit Meta offert avant démarrage', 'Replays pendant 3 mois', "Benchmarks + cas d'études complets"].map((f, i) => (
                 <div key={i} className="pc-feat"><i className="fas fa-check" /> {f}</div>
               ))}
             </div>
@@ -509,13 +509,13 @@ function Pricing() {
           <div className="price-card price-vip">
             <div className="pc-badge vip">👑 VIP — 10 places max</div>
             <div className="pc-head">
-              <h3>Cohorte 1 · VIP</h3>
+              <h3>Pack Privilège</h3>
               <div className="pc-price"><span className="pc-now gold">4 990 DHS</span></div>
               <p className="pc-terms">ou 2 × 2 495 DHS · Paiement en 2 fois</p>
             </div>
             <div className="pc-features">
               <div className="pc-feat"><i className="fas fa-check" /> Tout ce qui est dans Early Bird</div>
-              {['2 sessions 1-to-1 de coaching privé', 'Audit avancé de tes campagnes', 'Accès WhatsApp direct au formateur', 'Replays pendant 6 mois', 'Priorité cohortes futures'].map((f, i) => (
+              {['2 sessions 1-to-1 de coaching privé', 'Audit avancé de tes campagnes', 'Replays pendant 6 mois', 'Priorité cohortes futures'].map((f, i) => (
                 <div key={i} className="pc-feat vip-feat"><i className="fas fa-star" /> <strong>{f}</strong></div>
               ))}
             </div>
