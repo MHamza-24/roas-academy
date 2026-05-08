@@ -45,6 +45,7 @@ export async function POST(request: NextRequest) {
       offre,
       message: safeMessage,
       statut: 'nouveau',
+      date_inscription: new Date().toISOString().split('T')[0],
     }])
     .select()
 
