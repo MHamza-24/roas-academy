@@ -723,6 +723,10 @@ function Inscription() {
       const data = await res.json();
       if (res.ok && data.success) {
         setSuccess(true);
+        // Meta Pixel — Lead event
+        if (typeof window !== 'undefined' && (window as any).fbq) {
+          (window as any).fbq('track', 'Lead', { content_name: offre === 'vip' ? 'VIP' : 'Early Bird' });
+        }
       } else {
         alert(data.error ?? 'Une erreur est survenue. Réessaie ou contacte-nous sur WhatsApp.');
       }
