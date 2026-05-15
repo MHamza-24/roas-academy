@@ -28,6 +28,7 @@ async function brevoAddContact(email: string, prenom: string, nom: string, whats
         NOM: nom,
         TELEPHONE: whatsapp,
         OFFRE: offre,
+        DATE_INSCRIPTION: new Date().toISOString().split('T')[0], // YYYY-MM-DD
       },
       listIds: [Number(process.env.BREVO_LIST_ID ?? '2')],
       updateEnabled: true,
