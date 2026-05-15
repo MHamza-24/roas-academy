@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type Offre = 'early' | 'vip';
 
@@ -545,16 +545,152 @@ function Inscription() {
 
   const DIAL_CODES = [
     { code: '+212', flag: '🇲🇦', label: 'Maroc' },
-    { code: '+33',  flag: '🇫🇷', label: 'France' },
-    { code: '+32',  flag: '🇧🇪', label: 'Belgique' },
-    { code: '+41',  flag: '🇨🇭', label: 'Suisse' },
+    { code: '+213', flag: '🇩🇿', label: 'Algérie' },
+    { code: '+216', flag: '🇹🇳', label: 'Tunisie' },
+    { code: '+218', flag: '🇱🇾', label: 'Libye' },
+    { code: '+20',  flag: '🇪🇬', label: 'Égypte' },
+    { code: '+221', flag: '🇸🇳', label: 'Sénégal' },
+    { code: '+225', flag: '🇨🇮', label: "Côte d'Ivoire" },
+    { code: '+226', flag: '🇧🇫', label: 'Burkina Faso' },
+    { code: '+227', flag: '🇳🇪', label: 'Niger' },
+    { code: '+228', flag: '🇹🇬', label: 'Togo' },
+    { code: '+229', flag: '🇧🇯', label: 'Bénin' },
+    { code: '+230', flag: '🇲🇺', label: 'Maurice' },
+    { code: '+231', flag: '🇱🇷', label: 'Liberia' },
+    { code: '+232', flag: '🇸🇱', label: 'Sierra Leone' },
+    { code: '+233', flag: '🇬🇭', label: 'Ghana' },
+    { code: '+234', flag: '🇳🇬', label: 'Nigeria' },
+    { code: '+235', flag: '🇹🇩', label: 'Tchad' },
+    { code: '+236', flag: '🇨🇫', label: 'Centrafrique' },
+    { code: '+237', flag: '🇨🇲', label: 'Cameroun' },
+    { code: '+238', flag: '🇨🇻', label: 'Cap-Vert' },
+    { code: '+239', flag: '🇸🇹', label: 'São Tomé' },
+    { code: '+240', flag: '🇬🇶', label: 'Guinée équatoriale' },
+    { code: '+241', flag: '🇬🇦', label: 'Gabon' },
+    { code: '+242', flag: '🇨🇬', label: 'Congo' },
+    { code: '+243', flag: '🇨🇩', label: 'RD Congo' },
+    { code: '+244', flag: '🇦🇴', label: 'Angola' },
+    { code: '+245', flag: '🇬🇼', label: 'Guinée-Bissau' },
+    { code: '+248', flag: '🇸🇨', label: 'Seychelles' },
+    { code: '+249', flag: '🇸🇩', label: 'Soudan' },
+    { code: '+250', flag: '🇷🇼', label: 'Rwanda' },
+    { code: '+251', flag: '🇪🇹', label: 'Éthiopie' },
+    { code: '+252', flag: '🇸🇴', label: 'Somalie' },
+    { code: '+253', flag: '🇩🇯', label: 'Djibouti' },
+    { code: '+254', flag: '🇰🇪', label: 'Kenya' },
+    { code: '+255', flag: '🇹🇿', label: 'Tanzanie' },
+    { code: '+256', flag: '🇺🇬', label: 'Ouganda' },
+    { code: '+257', flag: '🇧🇮', label: 'Burundi' },
+    { code: '+258', flag: '🇲🇿', label: 'Mozambique' },
+    { code: '+260', flag: '🇿🇲', label: 'Zambie' },
+    { code: '+261', flag: '🇲🇬', label: 'Madagascar' },
+    { code: '+263', flag: '🇿🇼', label: 'Zimbabwe' },
+    { code: '+264', flag: '🇳🇦', label: 'Namibie' },
+    { code: '+265', flag: '🇲🇼', label: 'Malawi' },
+    { code: '+266', flag: '🇱🇸', label: 'Lesotho' },
+    { code: '+267', flag: '🇧🇼', label: 'Botswana' },
+    { code: '+268', flag: '🇸🇿', label: 'Eswatini' },
+    { code: '+27',  flag: '🇿🇦', label: 'Afrique du Sud' },
+    { code: '+1',   flag: '🇺🇸', label: 'États-Unis' },
     { code: '+1',   flag: '🇨🇦', label: 'Canada' },
-    { code: '+44',  flag: '🇬🇧', label: 'Royaume-Uni' },
+    { code: '+52',  flag: '🇲🇽', label: 'Mexique' },
+    { code: '+53',  flag: '🇨🇺', label: 'Cuba' },
+    { code: '+54',  flag: '🇦🇷', label: 'Argentine' },
+    { code: '+55',  flag: '🇧🇷', label: 'Brésil' },
+    { code: '+56',  flag: '🇨🇱', label: 'Chili' },
+    { code: '+57',  flag: '🇨🇴', label: 'Colombie' },
+    { code: '+58',  flag: '🇻🇪', label: 'Venezuela' },
+    { code: '+51',  flag: '🇵🇪', label: 'Pérou' },
+    { code: '+593', flag: '🇪🇨', label: 'Équateur' },
+    { code: '+595', flag: '🇵🇾', label: 'Paraguay' },
+    { code: '+598', flag: '🇺🇾', label: 'Uruguay' },
+    { code: '+591', flag: '🇧🇴', label: 'Bolivie' },
+    { code: '+30',  flag: '🇬🇷', label: 'Grèce' },
+    { code: '+31',  flag: '🇳🇱', label: 'Pays-Bas' },
+    { code: '+32',  flag: '🇧🇪', label: 'Belgique' },
+    { code: '+33',  flag: '🇫🇷', label: 'France' },
     { code: '+34',  flag: '🇪🇸', label: 'Espagne' },
+    { code: '+351', flag: '🇵🇹', label: 'Portugal' },
+    { code: '+352', flag: '🇱🇺', label: 'Luxembourg' },
+    { code: '+353', flag: '🇮🇪', label: 'Irlande' },
+    { code: '+354', flag: '🇮🇸', label: 'Islande' },
+    { code: '+355', flag: '🇦🇱', label: 'Albanie' },
+    { code: '+356', flag: '🇲🇹', label: 'Malte' },
+    { code: '+358', flag: '🇫🇮', label: 'Finlande' },
+    { code: '+359', flag: '🇧🇬', label: 'Bulgarie' },
+    { code: '+36',  flag: '🇭🇺', label: 'Hongrie' },
+    { code: '+370', flag: '🇱🇹', label: 'Lituanie' },
+    { code: '+371', flag: '🇱🇻', label: 'Lettonie' },
+    { code: '+372', flag: '🇪🇪', label: 'Estonie' },
+    { code: '+380', flag: '🇺🇦', label: 'Ukraine' },
+    { code: '+381', flag: '🇷🇸', label: 'Serbie' },
+    { code: '+385', flag: '🇭🇷', label: 'Croatie' },
+    { code: '+386', flag: '🇸🇮', label: 'Slovénie' },
+    { code: '+387', flag: '🇧🇦', label: 'Bosnie' },
+    { code: '+389', flag: '🇲🇰', label: 'Macédoine du Nord' },
+    { code: '+39',  flag: '🇮🇹', label: 'Italie' },
+    { code: '+40',  flag: '🇷🇴', label: 'Roumanie' },
+    { code: '+41',  flag: '🇨🇭', label: 'Suisse' },
+    { code: '+420', flag: '🇨🇿', label: 'Tchéquie' },
+    { code: '+421', flag: '🇸🇰', label: 'Slovaquie' },
+    { code: '+43',  flag: '🇦🇹', label: 'Autriche' },
+    { code: '+44',  flag: '🇬🇧', label: 'Royaume-Uni' },
+    { code: '+45',  flag: '🇩🇰', label: 'Danemark' },
+    { code: '+46',  flag: '🇸🇪', label: 'Suède' },
+    { code: '+47',  flag: '🇳🇴', label: 'Norvège' },
+    { code: '+48',  flag: '🇵🇱', label: 'Pologne' },
     { code: '+49',  flag: '🇩🇪', label: 'Allemagne' },
-    { code: '+971', flag: '🇦🇪', label: 'Émirats' },
+    { code: '+7',   flag: '🇷🇺', label: 'Russie' },
+    { code: '+90',  flag: '🇹🇷', label: 'Turquie' },
+    { code: '+91',  flag: '🇮🇳', label: 'Inde' },
+    { code: '+92',  flag: '🇵🇰', label: 'Pakistan' },
+    { code: '+93',  flag: '🇦🇫', label: 'Afghanistan' },
+    { code: '+94',  flag: '🇱🇰', label: 'Sri Lanka' },
+    { code: '+95',  flag: '🇲🇲', label: 'Myanmar' },
+    { code: '+98',  flag: '🇮🇷', label: 'Iran' },
+    { code: '+960', flag: '🇲🇻', label: 'Maldives' },
+    { code: '+961', flag: '🇱🇧', label: 'Liban' },
+    { code: '+962', flag: '🇯🇴', label: 'Jordanie' },
+    { code: '+963', flag: '🇸🇾', label: 'Syrie' },
+    { code: '+964', flag: '🇮🇶', label: 'Irak' },
+    { code: '+965', flag: '🇰🇼', label: 'Koweït' },
     { code: '+966', flag: '🇸🇦', label: 'Arabie Saoudite' },
+    { code: '+967', flag: '🇾🇪', label: 'Yémen' },
+    { code: '+968', flag: '🇴🇲', label: 'Oman' },
+    { code: '+970', flag: '🇵🇸', label: 'Palestine' },
+    { code: '+971', flag: '🇦🇪', label: 'Émirats arabes unis' },
+    { code: '+972', flag: '🇮🇱', label: 'Israël' },
+    { code: '+973', flag: '🇧🇭', label: 'Bahreïn' },
+    { code: '+974', flag: '🇶🇦', label: 'Qatar' },
+    { code: '+975', flag: '🇧🇹', label: 'Bhoutan' },
+    { code: '+976', flag: '🇲🇳', label: 'Mongolie' },
+    { code: '+977', flag: '🇳🇵', label: 'Népal' },
+    { code: '+81',  flag: '🇯🇵', label: 'Japon' },
+    { code: '+82',  flag: '🇰🇷', label: 'Corée du Sud' },
+    { code: '+84',  flag: '🇻🇳', label: 'Vietnam' },
+    { code: '+855', flag: '🇰🇭', label: 'Cambodge' },
+    { code: '+856', flag: '🇱🇦', label: 'Laos' },
+    { code: '+86',  flag: '🇨🇳', label: 'Chine' },
+    { code: '+880', flag: '🇧🇩', label: 'Bangladesh' },
+    { code: '+886', flag: '🇹🇼', label: 'Taïwan' },
+    { code: '+60',  flag: '🇲🇾', label: 'Malaisie' },
+    { code: '+61',  flag: '🇦🇺', label: 'Australie' },
+    { code: '+62',  flag: '🇮🇩', label: 'Indonésie' },
+    { code: '+63',  flag: '🇵🇭', label: 'Philippines' },
+    { code: '+64',  flag: '🇳🇿', label: 'Nouvelle-Zélande' },
+    { code: '+65',  flag: '🇸🇬', label: 'Singapour' },
+    { code: '+66',  flag: '🇹🇭', label: 'Thaïlande' },
   ];
+  const dialRef = useRef<HTMLDivElement>(null);
+  const [dialOpen, setDialOpen] = useState(false);
+  const [dialIdx, setDialIdx] = useState(0); // index 0 = Maroc par défaut
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (dialRef.current && !dialRef.current.contains(e.target as Node)) setDialOpen(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -565,6 +701,7 @@ function Inscription() {
     setForm({ prenom: '', nom: '', email: '', whatsapp: '', activite: '', message: '' });
     setOffre('early');
     setDialCode('+212');
+    setDialIdx(0);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -576,7 +713,7 @@ function Inscription() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...form,
-          whatsapp: dialCode + form.whatsapp.replace(/^0+/, '').replace(/[\s\-().]/g, ''),
+          whatsapp: DIAL_CODES[dialIdx].code + form.whatsapp.replace(/^0+/, '').replace(/[\s\-().]/g, ''),
           offre,
         }),
       });
@@ -638,17 +775,32 @@ function Inscription() {
                 </div>
                 <div className="form-field">
                   <label>WhatsApp *</label>
-                  <div className="phone-input-wrap">
-                    <select
-                      className="dial-select"
-                      value={dialCode}
-                      onChange={e => setDialCode(e.target.value)}
-                      aria-label="Indicatif pays"
+                  <div className="phone-input-wrap" ref={dialRef}>
+                    <button
+                      type="button"
+                      className="dial-trigger"
+                      onClick={() => setDialOpen(o => !o)}
+                      aria-haspopup="listbox"
+                      aria-expanded={dialOpen}
                     >
-                      {DIAL_CODES.map(({ code, flag, label }) => (
-                        <option key={code} value={code}>{flag} {code} — {label}</option>
-                      ))}
-                    </select>
+                      {DIAL_CODES[dialIdx].flag} {DIAL_CODES[dialIdx].code}
+                      <span className="dial-arrow">{dialOpen ? '▴' : '▾'}</span>
+                    </button>
+                    {dialOpen && (
+                      <ul className="dial-list" role="listbox">
+                        {DIAL_CODES.map((d, i) => (
+                          <li
+                            key={i}
+                            role="option"
+                            aria-selected={i === dialIdx}
+                            className={i === dialIdx ? 'dial-item dial-item--active' : 'dial-item'}
+                            onClick={() => { setDialIdx(i); setDialCode(d.code); setDialOpen(false); }}
+                          >
+                            {d.flag} {d.code} <span className="dial-country">{d.label}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                     <input
                       type="tel"
                       name="whatsapp"

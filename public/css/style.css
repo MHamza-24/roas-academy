@@ -810,19 +810,42 @@ h1 {
 .form-field select option { background:var(--surface2); }
 .form-field textarea { resize:vertical; min-height:80px; }
 /* Phone input with dial code selector */
-.phone-input-wrap { display:flex; gap:0; }
-.dial-select {
-  flex:0 0 auto; width:auto; max-width:180px;
-  border-radius:var(--r) 0 0 var(--r) !important;
-  border-right:none !important;
-  cursor:pointer;
-  background:rgba(255,255,255,.06) !important;
+.phone-input-wrap { display:flex; gap:0; position:relative; }
+.dial-trigger {
+  flex:0 0 auto;
+  display:flex; align-items:center; gap:6px;
+  padding:12px 10px 12px 14px;
+  background:rgba(255,255,255,.06);
+  border:1px solid var(--border2);
+  border-right:none;
+  border-radius:var(--r) 0 0 var(--r);
+  color:#fff; font-family:var(--ff); font-size:.9rem;
+  cursor:pointer; white-space:nowrap;
+  transition:.25s;
 }
+.dial-trigger:hover { background:rgba(255,255,255,.1); }
+.dial-arrow { font-size:.65rem; opacity:.6; margin-left:2px; }
+.dial-list {
+  position:absolute; top:100%; left:0;
+  width:260px; max-height:280px; overflow-y:auto;
+  background:#0f1c2e; border:1px solid var(--border2);
+  border-radius:0 0 var(--r) var(--r);
+  list-style:none; margin:0; padding:4px 0;
+  z-index:100; box-shadow:0 12px 32px rgba(0,0,0,.5);
+}
+.dial-item {
+  display:flex; align-items:center; gap:8px;
+  padding:9px 14px; cursor:pointer;
+  font-size:.88rem; color:rgba(255,255,255,.85);
+  transition:.15s;
+}
+.dial-item:hover { background:rgba(255,255,255,.07); }
+.dial-item--active { background:rgba(16,185,129,.15); color:#10b981; }
+.dial-country { color:rgba(255,255,255,.45); font-size:.82rem; }
 .phone-number-input {
   flex:1 1 0;
   border-radius:0 var(--r) var(--r) 0 !important;
 }
-.dial-select:focus { z-index:1; }
 .offer-pills { display:flex; flex-direction:column; gap:10px; }
 .offer-pill {
   display:flex; align-items:center; gap:10px;
