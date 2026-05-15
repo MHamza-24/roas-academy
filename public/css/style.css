@@ -809,6 +809,20 @@ h1 {
 .form-field input:focus,.form-field select:focus,.form-field textarea:focus { border-color:var(--green); box-shadow:0 0 0 3px rgba(16,185,129,.12); }
 .form-field select option { background:var(--surface2); }
 .form-field textarea { resize:vertical; min-height:80px; }
+/* Phone input with dial code selector */
+.phone-input-wrap { display:flex; gap:0; }
+.dial-select {
+  flex:0 0 auto; width:auto; max-width:180px;
+  border-radius:var(--r) 0 0 var(--r) !important;
+  border-right:none !important;
+  cursor:pointer;
+  background:rgba(255,255,255,.06) !important;
+}
+.phone-number-input {
+  flex:1 1 0;
+  border-radius:0 var(--r) var(--r) 0 !important;
+}
+.dial-select:focus { z-index:1; }
 .offer-pills { display:flex; flex-direction:column; gap:10px; }
 .offer-pill {
   display:flex; align-items:center; gap:10px;

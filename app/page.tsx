@@ -541,6 +541,20 @@ function Inscription() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [form, setForm] = useState({ prenom: '', nom: '', email: '', whatsapp: '', activite: '', message: '' });
+  const [dialCode, setDialCode] = useState('+212');
+
+  const DIAL_CODES = [
+    { code: '+212', flag: '🇲🇦', label: 'Maroc' },
+    { code: '+33',  flag: '🇫🇷', label: 'France' },
+    { code: '+32',  flag: '🇧🇪', label: 'Belgique' },
+    { code: '+41',  flag: '🇨🇭', label: 'Suisse' },
+    { code: '+1',   flag: '🇨🇦', label: 'Canada' },
+    { code: '+44',  flag: '🇬🇧', label: 'Royaume-Uni' },
+    { code: '+34',  flag: '🇪🇸', label: 'Espagne' },
+    { code: '+49',  flag: '🇩🇪', label: 'Allemagne' },
+    { code: '+971', flag: '🇦🇪', label: 'Émirats' },
+    { code: '+966', flag: '🇸🇦', label: 'Arabie Saoudite' },
+  ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -550,6 +564,7 @@ function Inscription() {
     setSuccess(false);
     setForm({ prenom: '', nom: '', email: '', whatsapp: '', activite: '', message: '' });
     setOffre('early');
+    setDialCode('+212');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -559,7 +574,11 @@ function Inscription() {
       const res = await fetch('/api/inscription', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, offre }),
+        body: JSON.stringify({
+          ...form,
+          whatsapp: dialCode + form.whatsapp.replace(/^0+/, '').replace(/[\s\-().]/g, ''),
+          offre,
+        }),
       });
       const data = await res.json();
       if (res.ok && data.success) {
@@ -619,7 +638,27 @@ function Inscription() {
                 </div>
                 <div className="form-field">
                   <label>WhatsApp *</label>
-                  <input type="tel" name="whatsapp" placeholder="+212 6XX XXX XXX" required value={form.whatsapp} onChange={handleChange} />
+                  <div className="phone-input-wrap">
+                    <select
+                      className="dial-select"
+                      value={dialCode}
+                      onChange={e => setDialCode(e.target.value)}
+                      aria-label="Indicatif pays"
+                    >
+                      {DIAL_CODES.map(({ code, flag, label }) => (
+                        <option key={code} value={code}>{flag} {code} — {label}</option>
+                      ))}
+                    </select>
+                    <input
+                      type="tel"
+                      name="whatsapp"
+                      placeholder="6XX XXX XXX"
+                      required
+                      value={form.whatsapp}
+                      onChange={handleChange}
+                      className="phone-number-input"
+                    />
+                  </div>
                 </div>
                 <div className="form-field">
                   <label>Votre activité</label>
