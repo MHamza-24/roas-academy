@@ -26,7 +26,7 @@ async function brevoAddContact(email: string, prenom: string, nom: string, whats
       attributes: {
         PRENOM: prenom,
         NOM: nom,
-        LANDLINE_NUMBER: whatsapp,
+        TELEPHONE: whatsapp,
         OFFRE: offre,
       },
       listIds: [Number(process.env.BREVO_LIST_ID ?? '2')],
